@@ -1,4 +1,5 @@
 import React from 'react'
+import Router from 'next/router'
 import Body from '~/components/base/Body'
 import Logo from '~/components/base/Logo'
 
@@ -34,5 +35,17 @@ const Index = () => (
     </div>
   </Body>
 )
+
+Index.getInitialProps = ({ req, res }) => {
+  console.log(req.headers)
+  if (res && req.headers.host === 'www.subrisa.com') {
+    res.writeHead(302, {
+      Location: 'https://subrisa.com'
+    })
+    res.end()
+    res.finished = true
+  }
+  return {}
+}
 
 export default Index
